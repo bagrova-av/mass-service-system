@@ -36,6 +36,12 @@ SimulatorWindow::SimulatorWindow(int numSources, int numDevices, int bufferCapac
     ui->setupUi(this);
     simulator.init();
 
+    if (numSources != 0 && numDevices !=0 && bufferCapacity != 0)
+    {
+        int N_opt = estimateRequiredRequests(numSources, numDevices, bufferCapacity, alpha, beta, lambda);
+        qDebug() << "Оптимальное количество заявок:" << N_opt;
+    }
+
     // Настройка таблиц
     setupTables();
     updateSourcesTable();
@@ -411,8 +417,17 @@ static QChart* createLineChart(
     axisX->setLabelFormat("%d");
     axisX->setTitleText(xTitle);
 
+    // int maxX = points.empty() ? 1 : static_cast<int>(points.back().x());
+    // axisX->setRange(1, maxX);
+    int minX = points.empty() ? 1 : static_cast<int>(points.front().x());
     int maxX = points.empty() ? 1 : static_cast<int>(points.back().x());
-    axisX->setRange(0, maxX + 1);
+    axisX->setRange(minX, maxX);
+    axisX->setTickType(QValueAxis::TicksFixed);
+    axisX->setTickAnchor(minX);
+    axisX->setTickInterval(1.0);
+    axisX->setTickCount(maxX - minX + 1);
+    axisX->setTickType(QValueAxis::TicksFixed);
+    axisX->setMinorTickCount(0);
     chart->addAxis(axisX, Qt::AlignBottom);
     series->attachAxis(axisX);
 
@@ -434,6 +449,9 @@ static QChart* createLineChart(
     } else {
         axisY->setRange(0, 1);
     }
+    axisY->setTickType(QValueAxis::TicksFixed);
+    axisY->setTickCount(9);
+    //axisY->setMinorTickCount(1);
     chart->addAxis(axisY, Qt::AlignLeft);
     series->attachAxis(axisY);
 
@@ -450,12 +468,12 @@ void SimulatorWindow::runExperimentsByDevices()
 {
     std::vector<ExperimentResult> results;
 
-    const int numSources = 50;
-    const int bufferSize = 9;
-    const double alpha = 5, beta = 8, lambda = 0.3;
-    const int target = 200;
+    const int numSources = 11;
+    const int bufferSize = 4;
+    const double alpha = 5, beta = 7, lambda = 0.6;
+    const int target = 4000;
 
-    for (int nDevices = 1; nDevices <= 50; ++nDevices)
+    for (int nDevices = 1; nDevices <= 6; ++nDevices)
     {
         Simulator sim(numSources, nDevices, bufferSize, alpha, beta, lambda, target);
         sim.init();
@@ -524,12 +542,12 @@ void SimulatorWindow::runExperimentsByBuffer()
 {
     std::vector<ExperimentResult> results;
 
-    const int numSources = 15;
-    const int numDevices = 5;
-    const double alpha = 5, beta = 8, lambda = 0.3;
-    const int target = 200;
+    const int numSources = 11;
+    const int numDevices = 3;
+    const double alpha = 5, beta = 7, lambda = 0.6;
+    const int target = 4000;
 
-    for (int bufferSize = 1; bufferSize <= 80; ++bufferSize)
+    for (int bufferSize = 1; bufferSize <= 4; ++bufferSize)
     {
         Simulator sim(numSources, numDevices, bufferSize, alpha, beta, lambda, target);
         sim.init();
@@ -588,12 +606,12 @@ void SimulatorWindow::runExperimentsBySources()
 {
     std::vector<ExperimentResult> results;
 
-    const int numDevices = 5;
-    const int bufferSize = 3;
-    const double alpha = 5.0, beta = 8.0, lambda = 0.3;
-    const int target = 200;
+    const int numDevices = 3;
+    const int bufferSize = 4;
+    const double alpha = 5.0, beta = 7.0, lambda = 0.6;
+    const int target = 4000;
 
-    for (int nSources = 1; nSources <= 50; ++nSources)
+    for (int nSources = 1; nSources <= 12; ++nSources)
     {
         Simulator sim(nSources, numDevices, bufferSize, alpha, beta, lambda, target);
         sim.init();
@@ -646,4 +664,70 @@ void SimulatorWindow::buildChartsBySources(const std::vector<ExperimentResult>& 
         "Количество источников",
         "Коэффициент\nзагрузки",
         pointsUsage));
+}
+
+int SimulatorWindow::estimateRequiredRequests(
+    int numSources, int numDevices, int bufferSize,
+    double alpha, double beta, double lambda)
+{
+    double confidenceLevel = 0.9;
+    double delta = 0.1;
+
+    const double t_alpha = 1.643; // для α = 0.9
+    int N_current = 100; // начальное значение
+    double p_prev = 0.0;
+    double p_current = 0.0;
+    bool firstIteration = true;
+
+    qDebug() << "=== Оценка необходимого количества заявок ===";
+
+    for (int iteration = 1; iteration <= 50; ++iteration)
+    {
+        Simulator sim(numSources, numDevices, bufferSize,
+                      alpha, beta, lambda, N_current);
+        sim.init();
+        sim.runAutoMode();
+        sim.setStatisticsTimeTotalModeling(sim.getTime());
+        const Statistics &st = sim.getStatistics();
+
+        // вычисляем среднюю вероятность отказа по всем источникам
+        double p_sum = 0.0;
+        for (int i = 1; i <= numSources; ++i)
+            p_sum += st.calcRejectedProbability(i);
+        p_current = p_sum / numSources;
+
+        qDebug() << QString("Итерация %1: N=%2, p=%3")
+                        .arg(iteration)
+                        .arg(N_current)
+                        .arg(p_current, 0, 'f', 5);
+
+        if (!firstIteration)
+        {
+            double diff = std::abs(p_current - p_prev);
+            if (diff < 0.1 * p_prev)
+            {
+                qDebug() << "Разница между p0 и p1 меньше 10%. Останавливаем.";
+                break;
+            }
+        }
+
+        firstIteration = false;
+        p_prev = p_current;
+
+        // вычисляем новое N
+        if (p_current > 0.0 && p_current < 1.0)
+        {
+            double N_new = ((1 - p_current) * std::pow(t_alpha, 2)) / (p_current * std::pow(delta, 2));
+            N_current = static_cast<int>(std::ceil(N_new));
+        }
+        else
+        {
+            qDebug() << "p вне диапазона (0,1), используем N=1000 по умолчанию.";
+            p_current = 0.05;
+            N_current = 1000;
+        }
+    }
+
+    qDebug() << "Необходимое количество заявок для заданной точности:" << N_current;
+    return N_current;
 }

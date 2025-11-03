@@ -56,6 +56,9 @@ private:
 
     void updateAutoView();
 
+    int estimateRequiredRequests(int numSources, int numDevices, int bufferSize,
+        double alpha, double beta, double lambda);
+
     void runExperimentsByDevices();
     void runExperimentsByBuffer();
     void runExperimentsBySources();
