@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SimulatorWindow</class>
+ <widget class="QWidget" name="SimulatorWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1244</width>
+    <height>961</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string> Имитационное моделирование СМО </string>
+  </property>
+  <widget class="QTabWidget" name="tabMode">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>1221</width>
+     <height>941</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="stepModeTab">
+    <attribute name="title">
+     <string>stepMode</string>
+    </attribute>
+    <widget class="QWidget" name="formLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>241</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelTime">
+        <property name="text">
+         <string>Текущее время:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="labelCurrentTime">
+        <property name="text">
+         <string>0.0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Кол-во обработанных заявок:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="labelProcessedRequests">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QPushButton" name="backButton">
+     <property name="geometry">
+      <rect>
+       <x>860</x>
+       <y>20</y>
+       <width>181</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Назад</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="nextStepButton">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>20</y>
+       <width>161</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Следующий шаг</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="resultsShowButton">
+     <property name="geometry">
+      <rect>
+       <x>860</x>
+       <y>50</y>
+       <width>181</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Показать результаты</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>110</y>
+       <width>71</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Источники</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>110</y>
+       <width>81</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Приборы</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>690</x>
+       <y>110</y>
+       <width>54</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Буфер</string>
+     </property>
+    </widget>
+    <widget class="QProgressBar" name="progressBar">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>50</y>
+       <width>198</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="value">
+      <number>24</number>
+     </property>
+    </widget>
+    <widget class="QTableWidget" name="tableSources">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>130</y>
+       <width>231</width>
+       <height>331</height>
+      </rect>
+     </property>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>ID</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>nextSupply</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QTableWidget" name="tableDevices">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>130</y>
+       <width>371</width>
+       <height>331</height>
+      </rect>
+     </property>
+     <attribute name="horizontalHeaderCascadingSectionResizes">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="horizontalHeaderMinimumSectionSize">
+      <number>34</number>
+     </attribute>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>110</number>
+     </attribute>
+     <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderCascadingSectionResizes">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderMinimumSectionSize">
+      <number>35</number>
+     </attribute>
+     <attribute name="verticalHeaderStretchLastSection">
+      <bool>false</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Состояние</string>
+      </property>
+      <property name="font">
+       <font>
+        <bold>false</bold>
+       </font>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Текущая заявка</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Время окончания</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QTableWidget" name="tableBuffer">
+     <property name="geometry">
+      <rect>
+       <x>680</x>
+       <y>130</y>
+       <width>331</width>
+       <height>192</height>
+      </rect>
+     </property>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>№ места</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>№ заявки</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>№ источника</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QLabel" name="labelGenerationStatus">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>70</y>
+       <width>301</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Генерация заявок активна</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="autoModeTab">
+    <attribute name="title">
+     <string>autoMode</string>
+    </attribute>
+    <widget class="QWidget" name="formLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>241</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <layout class="QFormLayout" name="formLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelTime_2">
+        <property name="text">
+         <string>Текущее время:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="labelAutoTime">
+        <property name="text">
+         <string>0.0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Кол-во обработанных заявок:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="labelAutoProcessed">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QPushButton" name="showTablesButton">
+     <property name="geometry">
+      <rect>
+       <x>1030</x>
+       <y>20</y>
+       <width>161</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Показать таблицы</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="startAutoButton">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>20</y>
+       <width>161</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Запустить авторежим</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="stopAutoButton">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>50</y>
+       <width>161</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Остановить авторежим</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelAutoStatus">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>70</y>
+       <width>191</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Статус: Ожидание запуска</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="backAutoButton">
+     <property name="geometry">
+      <rect>
+       <x>1030</x>
+       <y>50</y>
+       <width>161</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Назад</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="chartsContainer" native="true">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>90</y>
+       <width>1181</width>
+       <height>811</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="2">
+       <widget class="QChartView" name="chart3" native="true"/>
+      </item>
+      <item row="0" column="1">
+       <widget class="QChartView" name="chart2" native="true"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QChartView" name="chart4" native="true"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QChartView" name="chart5" native="true"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QChartView" name="chart1" native="true"/>
+      </item>
+      <item row="1" column="2">
+       <widget class="QChartView" name="chart6" native="true"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QChartView" name="chart7" native="true"/>
+      </item>
+      <item row="2" column="1">
+       <widget class="QChartView" name="chart8" native="true"/>
+      </item>
+      <item row="2" column="2">
+       <widget class="QChartView" name="chart9" native="true"/>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QChartView</class>
+   <extends>QWidget</extends>
+   <header>qchartview.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
