@@ -470,7 +470,7 @@ void SimulatorWindow::runExperimentsByDevices()
 
     const int numSources = 11;
     const int bufferSize = 4;
-    const double alpha = 5, beta = 7, lambda = 0.6;
+    const double alpha = 5, beta = 7, lambda = 0.63;
     const int target = 4000;
 
     for (int nDevices = 1; nDevices <= 6; ++nDevices)
@@ -544,7 +544,7 @@ void SimulatorWindow::runExperimentsByBuffer()
 
     const int numSources = 11;
     const int numDevices = 3;
-    const double alpha = 5, beta = 7, lambda = 0.6;
+    const double alpha = 5, beta = 7, lambda = 0.63;
     const int target = 4000;
 
     for (int bufferSize = 1; bufferSize <= 4; ++bufferSize)
@@ -608,7 +608,7 @@ void SimulatorWindow::runExperimentsBySources()
 
     const int numDevices = 3;
     const int bufferSize = 4;
-    const double alpha = 5.0, beta = 7.0, lambda = 0.6;
+    const double alpha = 5.0, beta = 7, lambda = 0.63;
     const int target = 4000;
 
     for (int nSources = 1; nSources <= 12; ++nSources)

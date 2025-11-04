@@ -12,6 +12,9 @@ void ResultsDialog::setupSourcesTable()
 
     ui->tableSourcesResults->setRowCount(sourceCount);
 
+    double allAavgRejectProb = 0;
+    double allAvgSystemTime = 0;
+
     for (int i = 0; i < sourceCount; ++i) {
         int sourceId = i + 1;
         std::cout << "Processing source " << sourceId << " (i=" << i << ")..." << std::endl;
@@ -36,6 +39,7 @@ void ResultsDialog::setupSourcesTable()
             double rejectProb = statisticsRef.calcRejectedProbability(sourceId);
             ui->tableSourcesResults->setItem(i, 2,
                                              new QTableWidgetItem(QString::number(rejectProb, 'f', 4)));
+            allAavgRejectProb += rejectProb;
 
             // 5. Остальные вычисления - делаем по одному с проверкой
             std::cout << "  Calculating avg buffer time..." << std::endl;
@@ -52,6 +56,7 @@ void ResultsDialog::setupSourcesTable()
             double avgSystemTime = statisticsRef.calcAvgInSystem(sourceId);
             ui->tableSourcesResults->setItem(i, 5,
                                              new QTableWidgetItem(QString::number(avgSystemTime, 'f', 4)));
+            allAvgSystemTime += avgSystemTime;
 
             std::cout << "  Calculating buffer dispersion..." << std::endl;
             double dispBuffer = statisticsRef.calcDispInBuffer(sourceId);
@@ -70,6 +75,10 @@ void ResultsDialog::setupSourcesTable()
             throw; // перебрасываем исключение дальше
         }
     }
+    allAavgRejectProb /= sourceCount;
+    allAvgSystemTime /= sourceCount;
+    std::cout << allAavgRejectProb << "\n";
+    std::cout << allAvgSystemTime << "\n";
 
     std::cout << "=== setupSourcesTable completed successfully ===" << std::endl;
 }
@@ -82,6 +91,8 @@ void ResultsDialog::setupDevicesTable()
     std::cout << "Device count: " << deviceCount << std::endl;
 
     ui->tableDevicesResults->setRowCount(deviceCount);
+
+    double avgUsage = 0;
 
     for (int i = 0; i < deviceCount; ++i) {
         int deviceId = i + 1;
@@ -103,7 +114,7 @@ void ResultsDialog::setupDevicesTable()
             std::cout << "  usage = " << usage << std::endl;
             ui->tableDevicesResults->setItem(i, 2,
                                              new QTableWidgetItem(QString::number(usage, 'f', 4)));
-
+            avgUsage += usage;
 
             std::cout << "  Device " << deviceId << " completed successfully!" << std::endl;
 
@@ -112,6 +123,8 @@ void ResultsDialog::setupDevicesTable()
             throw;
         }
     }
+    avgUsage /= deviceCount;
+    std::cout << avgUsage << "\n";
 
     std::cout << "=== setupDevicesTable completed successfully ===" << std::endl;
 }
