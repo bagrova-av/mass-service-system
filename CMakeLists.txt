@@ -13,10 +13,47 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Charts)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Charts)
 
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+    main.cpp
+    qcustomplot.cpp
+    qcustomplot.h
+)
+
+set(APP_SOURCES
+    app/simulator.cpp
+    app/statistics.cpp
+)
+set(APP_HEADERS
+    app/simulator.h
+    app/statistics.h
+)
+
+set(UI_SOURCES
+    ui/mainWindow.cpp
+    ui/resultsdialog.cpp
+    ui/simulatorwindow.cpp
+)
+set(UI_HEADERS
+    ui/mainWindow.h
+    ui/resultsdialog.h
+    ui/simulatorwindow.h
+)
+set(UI_FORMS
+    ui/mainWindow.ui
+    ui/resultsdialog.ui
+    ui/simulatorwindow.ui
+)
+
+set(MODELS_SOURCES
+    models/request.cpp
+    models/source.cpp
+    models/dispatcher.cpp
+    models/device.cpp
+)
+set(MODELS_HEADERS
+    models/request.h
+    models/source.h
+    models/dispatcher.h
+    models/device.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -40,21 +77,26 @@ else()
 
         add_executable(SMO
             ${PROJECT_SOURCES}
-            request.h request.cpp
-            source.h source.cpp
-            device.h device.cpp
-            buffer.h buffer.cpp
-            dispatcher.h dispatcher.cpp
+            ${APP_SOURCES}
+            ${APP_HEADERS}
+            ${UI_SOURCES}
+            ${UI_HEADERS}
+            ${UI_FORMS}
+            ${MODELS_SOURCES}
+            ${MODELS_HEADERS}
+            # request.h request.cpp
+            # source.h source.cpp
+            # device.h device.cpp
+            # models/buffer.h models/buffer.cpp
+            # dispatcher.h dispatcher.cpp
 
-            dispatcher.h dispatcher.cpp
+            # dispatcher.h dispatcher.cpp
 
-            statistics.h statistics.cpp
+            # statistics.h statistics.cpp
 
-            simulator.cpp simulator.h
-            simulatorwindow.h simulatorwindow.cpp simulatorwindow.ui
-            resultsdialog.h resultsdialog.cpp resultsdialog.ui
-
-
+            # simulator.cpp simulator.h
+            # simulatorwindow.h simulatorwindow.cpp simulatorwindow.ui
+            # resultsdialog.h resultsdialog.cpp resultsdialog.ui
         )
     endif()
 endif()

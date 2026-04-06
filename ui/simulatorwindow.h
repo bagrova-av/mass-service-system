@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QTimer>
-#include "simulator.h"
+#include "../app/simulator.h"
 
 namespace Ui {
 class SimulatorWindow;

@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-#include "statistics.h"
+#include "../app/statistics.h"
 
 
 namespace Ui {

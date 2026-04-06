@@ -1,8 +1,8 @@
 #ifndef SIMULATOR_H
 #define SIMULATOR_H
 
-#include "source.h"
-#include "dispatcher.h"
+#include "../models/source.h"
+#include "../models/dispatcher.h"
 #include "statistics.h"
 
 class Simulator

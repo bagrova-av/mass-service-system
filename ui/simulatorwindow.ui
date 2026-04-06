@@ -172,7 +172,7 @@
        <x>30</x>
        <y>130</y>
        <width>231</width>
-       <height>331</height>
+       <height>451</height>
       </rect>
      </property>
      <attribute name="horizontalHeaderStretchLastSection">
@@ -195,7 +195,7 @@
        <x>290</x>
        <y>130</y>
        <width>371</width>
-       <height>331</height>
+       <height>451</height>
       </rect>
      </property>
      <attribute name="horizontalHeaderCascadingSectionResizes">
@@ -249,7 +249,7 @@
        <x>680</x>
        <y>130</y>
        <width>331</width>
-       <height>192</height>
+       <height>291</height>
       </rect>
      </property>
      <attribute name="horizontalHeaderStretchLastSection">

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>956</width>
-    <height>679</height>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,7 +32,7 @@
      <x>20</x>
      <y>80</y>
      <width>921</width>
-     <height>291</height>
+     <height>421</height>
     </rect>
    </property>
    <attribute name="horizontalHeaderDefaultSectionSize">
@@ -88,8 +88,8 @@
   <widget class="QTableWidget" name="tableDevicesResults">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>410</y>
+     <x>20</x>
+     <y>540</y>
      <width>371</width>
      <height>241</height>
     </rect>
@@ -129,8 +129,8 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>390</y>
+     <x>20</x>
+     <y>520</y>
      <width>161</width>
      <height>17</height>
     </rect>
@@ -142,8 +142,8 @@
   <widget class="QPushButton" name="closeResultsButton">
    <property name="geometry">
     <rect>
-     <x>860</x>
-     <y>640</y>
+     <x>830</x>
+     <y>740</y>
      <width>75</width>
      <height>25</height>
     </rect>
